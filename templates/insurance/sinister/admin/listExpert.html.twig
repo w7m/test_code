@@ -1,0 +1,42 @@
+{% extends 'insurance/sinister/skeleton_page/baseSinistre.html.twig' %}
+
+{% block body %}
+
+    <div class="card">
+        <div class="card-header bg-info d-flex justify-content-between">
+            <h4 style="color: white"><i class="fas fa-list-ul"></i> Liste des experts</h4>
+
+            <a href="{{ path('new-expert') }}">
+                <button class="btn btn-info border-white "><i class="fas fa-plus-square"></i> Ajouter un expert</button>
+            </a>
+        </div>
+        <div class="col-xl-3 col-sm-6 mb-4 " style="margin-top: 50px">
+
+        </div>
+        <div class="container">
+
+
+            <table id="listExpert" class="table table-striped table-bordered">
+                <thead>
+                <tr>
+                    <th>Prénom</th>
+                    <th>Nom</th>
+                    <th>Téléphone</th>
+                    <th>Email</th>
+                    <th>Matricule Fiscale</th>
+                    <th>Raison</th>
+                    <th>Action</th>
+
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('listExpert') }}
+    {{ encore_entry_script_tags('dataTabes') }}
+
+{% endblock %}

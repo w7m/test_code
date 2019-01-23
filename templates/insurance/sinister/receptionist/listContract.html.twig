@@ -1,0 +1,39 @@
+{% extends 'insurance/sinister/skeleton_page/baseSinistre.html.twig' %}
+
+{% block body %}
+    <div class="card">
+        <div class="card-header bg-info d-flex justify-content-between">
+            <h4 style="color: white"><i class="fas fa-file-contract"></i> Liste des contrats</h4>
+
+            <a href="{{ path('new-contract') }}">
+                <button class="btn btn-info border-white "><i class="fas fa-plus-square"></i> Créer nouveau contrat</button>
+            </a>
+        </div>
+        <div class="col-xl-3 col-sm-6 mb-4 " style="margin-top: 50px">
+
+        </div>
+        <div class="container">
+
+
+            <table id="contract-table-list" class="table table-striped table-bordered">
+                <thead>
+                <tr>
+                    <th class="text-center">type de véhicule</th>
+                    <th class="text-center">N° d'immatriculation de véhicule</th>
+                    <th class="text-center">Date de mise en circulation</th>
+                    <th class="text-center">Nom assuré</th>
+                    <th class="text-center">Prenom assuré</th>
+                    <th class="text-center" >Actions</th>
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('listContract') }}
+    {{ encore_entry_script_tags('dataTabes') }}
+{% endblock %}
+

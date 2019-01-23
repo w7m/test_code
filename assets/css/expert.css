@@ -1,0 +1,7 @@
+.navbar-nav .nav-item .nav-link .badge {
+    position: relative;
+    margin-left: 0;
+    top: 0;
+    font-weight: 600;
+    font-size: 0.7rem;
+}

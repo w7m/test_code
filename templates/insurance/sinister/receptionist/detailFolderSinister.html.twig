@@ -1,0 +1,114 @@
+{% extends 'insurance/sinister/skeleton_page/baseSinistre.html.twig' %}
+
+{% block body %}
+
+    <div class="card">
+
+        <h4 class="card-header bg-info" style="color: white"><i class="fas fa-user-edit"></i> Les informations de
+            dossier de reference: {{ folder.ref }}
+        </h4>
+        <div class="container">
+            <div class="row" style="margin-top: 50px">
+                <div class="col-6">
+
+                    <table class="table table-hover">
+                        <thead>
+                        <tr class="table-info">
+                            <th scope="col" colspan="2">Dossier</th>
+                        </tr>
+                        <tbody>
+                        <tr>
+                            <th>Référence</th>
+                            <td>{{ folder.ref }}</td>
+                        </tr>
+                        <tr>
+                            <th>state</th>
+                            <td>{{ folder.state }}</td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-6">
+
+                    <table class="table table-hover">
+                        <thead>
+                        <tr class="table-info">
+                            <th scope="col" colspan="2">Assuré</th>
+                        </tr>
+                        <tbody>
+                        <tr>
+                            <th>Nom complet</th>
+                            <td>{{ ensured.firstName }} {{ ensured.lastName }}</td>
+                        </tr>
+                        <tr>
+                            <th>CIN</th>
+                            <td>{{ ensured.cin }}</td>
+                        </tr>
+                        <tr>
+                            <th>Email</th>
+                            <td>{{ ensured.email }}</td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 50px">
+                <div class="col-6">
+
+                    <table class="table table-hover">
+                        <thead>
+                        <tr class="table-info">
+                            <th scope="col" colspan="2">Véhicule</th>
+                        </tr>
+                        <tbody>
+                        <tr>
+                            <th>Type</th>
+                            <td>{{ vehicle.type }}</td>
+                        </tr>
+                        <tr>
+                            <th>Matricule</th>
+                            <td>{{ vehicle.registrationNumber }}</td>
+                        </tr>
+                        <tr>
+                            <th>Carte grise</th>
+                            <td>{{ vehicle.getGrayCard }}</td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-6">
+
+                    <table class="table table-hover">
+                        <thead>
+                        <tr class="table-info">
+                            <th scope="col" colspan="2">Expert</th>
+                        </tr>
+                        <tbody>
+                        <tr>
+                            <th>Nom complet</th>
+                            <td>{{ expert.firstName }}  {{ expert.lastName }}</td>
+                        </tr>
+                        <tr>
+                            <th>state</th>
+                            <td>{{ expert.getRegistrationTaxNumber }}</td>
+                        </tr>
+                        <tr>
+                            <th>Société</th>
+                            <td>{{ expert.getCompanyName }}</td>
+                        </tr>
+                        <tr>
+                            <th>adresse</th>
+                            <td>{{ expert.getCity }} {{ expert.getPostalCode }} {{ expert.getAddress }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+

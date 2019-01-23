@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}AttachedFile index{% endblock %}
+
+{% block body %}
+    <h1>AttachedFile index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Upload_date</th>
+                <th>Validated</th>
+                <th>ImageName</th>
+                <th>UpdatedAt</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for attached_file in attached_files %}
+            <tr>
+                <td>{{ attached_file.id }}</td>
+                <td>{{ attached_file.name }}</td>
+                <td>{{ attached_file.type }}</td>
+                <td>{{ attached_file.uploadDate ? attached_file.uploadDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ attached_file.validated ? 'Yes' : 'No' }}</td>
+                <td>{{ attached_file.imageName }}</td>
+                <td>{{ attached_file.updatedAt ? attached_file.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('attached_file_show', {'id': attached_file.id}) }}">show</a>
+                    <a href="{{ path('attached_file_edit', {'id': attached_file.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('attached_file_new') }}">Create new</a>
+{% endblock %}

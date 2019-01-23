@@ -1,0 +1,29 @@
+{% extends 'insurance/expert/skeleton/baseExpert.html.twig' %}
+
+{% block body %}
+
+    <div class="card mb-3">
+        <div class="card-header">
+            <h3>Détails du dossier {{ reference }}</h3>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-sm" id="dataTable1"  width="100%" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th class="text-center">Statut</th>
+                        <th class="text-center">Date d'action</th>
+                        <th class="text-center">Type</th>
+                        <th class="text-center">Action réalisée</th>
+                        <th class="text-center">Détails</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('dataTabes') }}
+{% endblock %}

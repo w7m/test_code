@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+ {% block navbar %}
+     {{ include('insurance/sinister/skeleton_page/navbar.html.twig') }}
+ {% endblock %}
+  {% block menu %}
+      {{ include('insurance/sinister/skeleton_page/menu.html.twig') }}
+  {% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+{{ encore_entry_script_tags('dataTabes') }}
+{% endblock %}
+

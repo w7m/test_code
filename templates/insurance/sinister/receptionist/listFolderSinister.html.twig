@@ -1,0 +1,43 @@
+{% extends 'insurance/sinister/skeleton_page/baseSinistre.html.twig' %}
+
+{% block body %}
+    <div class="card">
+        <div class="card-header bg-info d-flex justify-content-between">
+            <h4 style="color: white"><i class="fas fa-list-ul"></i> Liste des Dossiers Sinistre </h4>
+
+            <a href="{{ path('new-folder-sinister') }}">
+                <button class="btn btn-info border-white "><i class="fas fa-plus-square"></i>Créer Nouveau Dossier</button>
+            </a>
+        </div>
+        <div class="col-xl-3 col-sm-6 mb-4 " style="margin-top: 50px">
+
+        </div>
+        <div class="container">
+
+
+            <table id="dossierSinistre" class="table table-striped table-bordered">
+                <thead>
+                <tr>
+                    <th>Référence de dossier</th>
+                    <th>Expert</th>
+                    <th>Matricule de véhicule</th>
+                    <th>Details</th>
+
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('listFolder') }}
+    {{ encore_entry_script_tags('dataTabes') }}
+
+
+{% endblock %}
+

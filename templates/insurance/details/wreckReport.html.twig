@@ -1,0 +1,33 @@
+<div class="card">
+    <h4 class="card-header"><i class="fas fa-list"></i> Details de rapport d'épave:</h4>
+    <div class="d-flex flex-column card-body">
+        <h5>Sujet : Demande de dossier épave pour le véhicule
+            immatriculé {{ folder.vehicle.registrationNumber }}</h5><br>
+        <h6>Déroulement de l'accident :</h6>
+        <p>
+            <span class="font-weight-bold text-danger"
+                 id="expertCommentsField">{{ wreckReportDetails.comments }}
+            </span>
+        </p>
+
+        <p>Nous avons estimé la valeur du véhicule, le jour de l'accident, à
+            <span class="font-weight-bold text-danger" id="estimatedPriceField">
+                {{ wreckReportDetails.estimatedCarPrice }}
+            </span> DT et vu l'estimation des frais de
+            réparation qui s'élèvent à
+            <span class="font-weight-bold text-danger" id="estimatedReparationsField">
+                {{ wreckReportDetails.repairAmount }}
+            </span>
+            DT et qui
+            plus de 50 % du prix du véhicule; nous avons proposé de le vendre en épave.
+        </p>
+        {#<div class="col-6">#}
+            {#<p><span class="font-weight-bold text-success">Prix estimé de voiture: </span>{{ wreckReportDetails.estimatedCarPrice }}dt</p>#}
+            {#<p><span class="font-weight-bold text-success">Prix estimé de réparation: </span>{{ wreckReportDetails.repairAmount }} dt</p>#}
+            {#<p><span class="font-weight-bold text-success">Prix estimé de vente: </span>{{ wreckReportDetails.sellingPrice  }} dt</p>#}
+        {#</div>#}
+        {#<div class="col-6">#}
+            {#<p><span class="font-weight-bold text-success">Commentaires:</span> {{ wreckReportDetails.comments }}</p>#}
+        {#</div>#}
+    </div>
+</div>

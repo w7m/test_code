@@ -1,0 +1,334 @@
+{% extends 'insurance/expert/skeleton/baseExpert.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('editFolder') }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('dropZone') }}
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+{% endblock %}
+
+{% block body %}
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="flash-{{ label }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+    <div class="d-flex justify-content-between">
+        <h3 class="text-uppercase text-primary">Dossier N°: {{ folder.ref }}</h3>
+        <input id="folderId" type="hidden" value="{{ folder.id }}">
+        <div>
+            <h5 class="text-uppercase text-info">Montant factures</h5>
+            <h6 id="real-amount-text" class="text-uppercase text-info">Réel : <span></span> TND</h6>
+            <h6 id="estimated-amount-text" class="text-uppercase text-info">Estimé : <span></span> TND</h6>
+        </div>
+    </div>
+    <div class="panel with-nav-tabs panel-default">
+        <div class="panel-heading">
+            <ul class="nav nav-tabs">
+                <li class="active"><a class="btn btn-outline-primary active" href="#tabGeneralInfo" data-toggle="tab">Informations
+                        générales</a></li>
+                <li><a class="btn btn-outline-primary" href="#tabBeforeRepair" data-toggle="tab">Avant réparation</a>
+                </li>
+                <li><a class="btn btn-outline-primary" href="#tabCrashPoints" data-toggle="tab">Points de choc</a></li>
+                <li><a class="btn btn-outline-primary" href="#tabPreExpertise" data-toggle="tab">Pré-expertise
+                        (devis)</a></li>
+                <li><a id="after-repair-tab-btn" class="btn btn-outline-primary" href="#tabAfterRepair"
+                       data-toggle="tab">Après réparation</a>
+                </li>
+                <li><a id="facture-tab-btn" class="btn btn-outline-primary" href="#tabFacturesDevis" data-toggle="tab">Factures</a>
+                </li>
+                <li><a class="btn btn-outline-primary" href="#tabSendFolder" data-toggle="tab">Soumission</a></li>
+            </ul>
+        </div>
+        <div class="panel-body">
+            <div class="tab-content">
+                <div class="tab-pane fade-in active" id="tabGeneralInfo">
+                    {% include 'insurance/details/vehicle.html.twig' %}
+                    {% include 'insurance/details/ensured.html.twig' %}
+                    <div class="card">
+                        <h4 class="card-header">Documents utiles</h4>
+                        <div class="card-body">
+                            <ul class="list-unstyled">
+                                <li><a href="#">Ordre de mission</a></li>
+                                <li><a href="{{ asset('images/grayCard/') }}{{ folder.vehicle.grayCard }} " download>Carte
+                                        grise du véhicule</a></li>
+                                <li><a href="#">Constat de l'accident</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="tabBeforeRepair">
+                    <div class="card">
+                        <h4 class="card-header">Envoyer les images avant réparation</h4>
+                        <form action="{{ path('addImage', {'idFolder': folder.id, 'imageType': 'beforeRepairImage'}) }}"
+                              class="dropzone"
+                              id="myDropZone">
+                        </form>
+                        <div>
+                            {% for image in folder.attachedFile %}
+                                {% if image.type == 'beforeRepairImage' %}
+                                    <div style="position: relative; display: inline-block;">
+                                        <img height="200" src="data:image/png;base64,{{ image.fileBase64 }}"
+                                             alt="">
+                                        {% if image.validated == false %}
+                                            <div style="position:absolute; top: 0;left: 0; width: 100%;height: 100%;background-color: rgba(255,0,7,0.4);"
+                                                 class="d-flex justify-content-center align-items-center"><h1
+                                                        class="text-white">INVALIDE</h1></div>
+                                        {% endif %}
+                                        <div style="position: absolute; top: 0;right: 0;">
+
+                                            <a href="{{ path('deleteImage', {'id': image.id}) }}"><i
+                                                        class="fas fa-times fa-2x text-danger delete-image"></i></a>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="tabAfterRepair">
+                    <div class="card">
+                        <h4 class="card-header">Envoyer les images après réparation</h4>
+                        <form action="{{ path('addImage', {'idFolder': folder.id, 'imageType': 'afterRepairImage'}) }}"
+                              class="dropzone"
+                              id="myDropZone">
+                        </form>
+                        <div>
+                            {% for image in folder.attachedFile %}
+                                {% if image.type == 'afterRepairImage' %}
+                                    <div style="position: relative; display: inline-block;">
+                                        <img height="200" src="data:image/png;base64,{{ image.fileBase64 }}"
+                                             alt="">
+                                        {% if image.validated == false %}
+                                            <div style="position:absolute; top: 0;left: 0; width: 100%;height: 100%;background-color: rgba(255,0,7,0.4);"
+                                                 class="d-flex justify-content-center align-items-center"><h1
+                                                        class="text-white">INVALIDE</h1></div>
+                                        {% endif %}
+                                        <div style="position: absolute; top: 0;right: 0;">
+                                            <a href="{{ path('deleteImage', {'id': image.id}) }}"><i
+                                                        class="fas fa-times fa-2x text-danger delete-image"></i></a>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="tabCrashPoints">
+                    <div class="card">
+                        <h4 class="card-header">Indiquer les points de chocs initiaux</h4>
+                        <div class="card-body d-flex justify-content-center">
+                            <canvas id="crash-points-canvas" width="650" height="400"
+                                    style="background: url('{{ asset('img/voiture.jpg') }}');">
+                                Votre navigateur ne prend pas en charge cette donctionnalité
+                            </canvas>
+                            <div class="d-flex flex-column">
+                                <button id="reset-crash-points-canvas" class="btn btn-danger">Réinitialiser</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="tabPreExpertise">
+                    <div class="card">
+                        <h4 class="card-header">Envoyer les devis de réparation</h4>
+                        <form action="{{ path('addImage', {'idFolder': folder.id, 'imageType': 'devisRepair'}) }}"
+                              class="dropzone"
+                              id="myDropZone">
+                        </form>
+                        <div>
+                            {% for image in folder.attachedFile %}
+                                {% if image.type == 'devisRepair' %}
+                                    <div style="position: relative; display: inline-block;">
+                                        <img height="200" src="data:image/png;base64,{{ image.fileBase64 }}"
+                                             alt="">
+                                        <div style="position: absolute; top: 0;right: 0;">
+                                            <a href="{{ path('deleteImage', {'id': image.id}) }}"><i
+                                                        class="fas fa-times fa-2x text-danger delete-image"></i></a>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h4 class="card-header">Type du dossier</h4>
+                        {% if folder.state != 'selling-standby' %}
+                            <div class="card-body">
+                                <button id="btn-epave-folder" class="btn btn-outline-primary">Dossier Epave</button>
+                                <button id="btn-repair-folder" class="btn btn-success">Dossier Réparation</button>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div id="epave-folder-panel" style="display: none;">
+                        <div id="generate-epave-folder" class="card col-6">
+                            <h4 class="card-header">Générer la demande de dossier épave</h4>
+                            <div id="wreckageReportForm" class="card-body">
+                                {{ form_start(epaveForm, {'action': path('saveWreckageReport', {'id':folder.id})}) }}
+                                {{ form_widget(epaveForm) }}
+                                <button id="wreckReportSave" class="btn btn-primary">Enregistrer</button>
+                                {{ form_end(epaveForm) }}
+                            </div>
+                        </div>
+                        <div id="generate-epave-folder" class="card col-6">
+                            <h4 class="card-header">Aperçu du rapport d'épave</h4>
+                            <div class="card-body">
+                                <h5>Sujet : Demande de dossier épave pour le véhicule
+                                    immatriculé {{ folder.vehicle.registrationNumber }}</h5><br>
+                                <h6>Déroulement de l'accident :</h6>
+                                <p><span class="font-weight-bold text-danger"
+                                         id="expertCommentsField"></span></p>
+
+                                <p>Nous avons estimé la valeur du véhicule, le jour de l'accident, à <span
+                                            class="font-weight-bold text-danger"
+                                            id="estimatedPriceField"></span> DT et vu l'estimation des frais de
+                                    réparation qui s'élèvent à <span class="font-weight-bold text-danger"
+                                                                     id="estimatedReparationsField"></span> DT et qui
+                                    plus de 50 % du prix du véhicule; nous avons proposé de le vendre en épave
+                                </p>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="tabFacturesDevis">
+                    <div class="card">
+                        <h4 class="card-header">Ajouter les factures de réparation</h4>
+                    </div>
+                    <div>
+                        <table id="bills-table" class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Référence</th>
+                                <th>Date</th>
+                                <th>Type</th>
+                                <th>Travaux</th>
+                                <th>Montant</th>
+                                <th>Estimation</th>
+                                <th>Actions</th>
+                            </tr>
+                            <tr id="add-bill-form">
+                                {{ form_start(billForm, {'action': path('addBill', {'id':folder.id})}) }}
+                                <td>{{ form_widget(billForm.bill_ref) }}</td>
+                                <td>{{ form_widget(billForm.bill_date) }}</td>
+                                <td>{{ form_widget(billForm.type) }}</td>
+                                <td>{{ form_widget(billForm.works) }}</td>
+                                <td>{{ form_widget(billForm.realAmount) }}</td>
+                                <td>{{ form_widget(billForm.estimaedAmount) }}
+                                    <div class="invalid-feedback">
+                                        Ce montant doit être inférieur ou égal au montant réel de la facture.
+                                    </div>
+                                </td>
+                                <td>
+                                    <button id="add-bill-btn" class="btn btn-success"><i class="fas fa-plus-square"></i>
+                                    </button>
+                                </td>
+                                {{ form_end(billForm) }}
+                            </tr>
+                            </thead>
+                            <tbody>
+
+
+                            {% for facture in folder.bills|reverse %}
+                                <tr>
+                                    <input type="hidden" value="{{ facture.id }}">
+                                    <td>{{ facture.billRef }}</td>
+                                    <td>{{ facture.billDate|date('d/m/Y') }}</td>
+                                    <td>{{ facture.type }}</td>
+                                    <td>{{ facture.works }}</td>
+                                    <td class="realAmount">{{ facture.realAmount }}</td>
+                                    <td class="estimatedAmount">{{ facture.estimaedAmount }}</td>
+                                    <td>
+                                        <button class="btn btn-danger btn-delete-bill"><i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="7" class="text-center">Vous n'avez pas encore inséré de factures pour
+                                        ce dossier
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="tabSendFolder">
+                    <div class="card">
+                        <h4 class="card-header">Récapitulatif</h4>
+                        <div class="d-flex card-body">
+                            <div class="col-6">
+                                <p>
+                                    <span class="font-weight-bold text-success">Type de soumission : </span> <span
+                                            id="submission_type"></span>
+                                </p>
+                                <input id="wreckSumbitLink" type="hidden"
+                                       value="{{ path('submitWreckFolder', {'id': folder.id}) }}">
+                                {% if folder.state == 'selling-standby' and folder.isWreck == true %}
+                                    <form action="{{ path('addImage', {'idFolder': folder.id, 'imageType': 'sellingReport'}) }}"
+                                          class="dropzone"
+                                          id="myDropZone">
+                                    </form>
+                                    <br>
+                                {% endif %}
+                                {% for image in folder.attachedFile %}
+                                    {% if image.type == 'sellingReport' %}
+                                        <div style="position: relative; display: inline-block;">
+                                            <img height="200" src="data:image/png;base64,{{ image.fileBase64 }}"
+                                                 alt="">
+                                            <div style="position: absolute; top: 0;right: 0;">
+                                                <a href="{{ path('deleteImage', {'id': image.id}) }}"><i
+                                                            class="fas fa-times fa-2x text-danger delete-image"></i></a>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                                <div>
+                                    <br>
+                                    <a id="btn-submit-folder" class="btn btn-success" href="
+{{ path('submitFolder', {'id': folder.id}) }}">Soumettre</a>
+                                </div>
+
+
+                            </div>
+                            <div class="col-6">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modal-image"
+         style="display: none; position: fixed;top: 0;left: 0; width: 100vw;height: 100vh; background-color: rgba(0,0,0,0.4);"
+         class="justify-content-center align-items-center">
+        <img src="" alt="">
+    </div>
+    <div id="modal-loading"
+         style="display:none ; position: fixed; top: 0;left: 0; width: 100vw;height: 100vh; background-color: rgba(255,255,255,0.1);"
+    >
+        <div class="d-flex justify-content-center align-items-center" style="height: 100%;width: 100%;">
+            <img src="{{ asset('build/images/Loading_icon.gif') }}" alt="">
+        </div>
+    </div>
+    <script>
+        var crashPoints = [];
+        {% for point in folder.crashPoints %}
+        let pointX{{ loop.index }} = {{ point["canvasX"] }};
+        let pointY{{ loop.index }} = {{ point["canvasY"] }};
+        crashPoints.push([pointX{{ loop.index }}, pointY{{ loop.index }}]);
+        {% endfor %}
+        {% if folder.isWreck == null %}
+        var isWreck = false;
+        {% else %}
+        var isWreck = {{ folder.isWreck }};
+        {% endif %}
+    </script>
+{% endblock %}

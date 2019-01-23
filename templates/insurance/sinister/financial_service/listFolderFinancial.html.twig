@@ -1,0 +1,51 @@
+{% extends 'insurance/sinister/skeleton_page/baseSinistre.html.twig' %}
+{% block body %}
+
+<div class="card">
+    <div class="card-header bg-info d-flex justify-content-between">
+        <h4 style="color: white"><i class="fas fa-list-ul"></i> Liste des dossiers en attente de validation remboursement: </h4>
+
+    </div>
+    <div class="col-xl-3 col-sm-6 mb-4 " style="margin-top: 50px">
+
+    </div>
+    <div class="container">
+        <div class="table-responsive">
+            <table class="table table-hover mt-3">
+                <thead>
+                <tr>
+                    <th class="text-center">Référence de dossier</th>
+                    <th>Assuré</th>
+                    <th>Matricule de véhicule</th>
+                    <th>Validation</th>
+                </tr>
+                {% if folders is not empty %}
+
+                {% for folder in folders %}
+                    <tr>
+                        <td  class="text-center">
+                            <a href="{{ path("folderDetail",{'id':folder.id}) }}">
+
+                            {{ folder.ref }}
+                            </a>
+
+                        </td>
+                        <td>{{ folder.vehicle.getEnsured.firstName}}  {{ folder.vehicle.getEnsured.lastName}}</td>
+                        <td>{{ folder.vehicle.registrationNumber }}</td>
+                        <td><i class="tick_btn btn btn-info fas fa-check-circle"></i></td>
+                        <input type="hidden" class="folderID" value="{{ folder.id }}">
+
+
+                    </tr>
+                {% endfor %}
+                {% endif %}
+            </table>
+        </div>
+    </div>
+ </div>
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('validateFolder') }}
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'insurance/sinister/skeleton_page/baseSinistre.html.twig' %}
+{% block title %}Parameter{% endblock %}
+{% block body %}
+
+    <div class="container">
+        <div class="d-flex align-items-center">
+            <h1>Mise à jour des paramètres</h1>
+        </div>
+
+        <div class="row">
+            <div class="col-9 offset-1">
+                {{ include('insurance/sinister/admin/parameter/_form.html.twig', {'button_label': 'Valider'}) }}
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-center">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('realTimeControlParameterInput') }}
+{% endblock %}

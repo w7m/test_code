@@ -1,0 +1,10 @@
+a:hover{
+ text-decoration: none !important;
+}
+
+input:focus {
+     outline:  none;!important;
+ }
+textarea:focus {
+    outline: none !important;
+}

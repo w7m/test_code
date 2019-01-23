@@ -1,0 +1,51 @@
+framework:
+    workflows:
+        folder_life_cycle:
+            type: 'state_machine'
+            audit_trail:
+                enabled: true
+            marking_store:
+                type: 'single_state'
+                arguments:
+                - 'state'
+            supports:
+                - App\Entity\Folder
+            initial_place: created
+            places:
+                - created
+                - in-progress
+                - wreck-report-sent
+                - selling-standby
+                - submitted
+                - closed
+                - to-be-reconsidered
+                - reassigned
+                - to-be-refunded
+            transitions:
+                treat:
+                    from: [reassigned, to-be-reconsidered, created]
+                    to:   in-progress
+                reassign:
+                    from: [submitted]
+                    to:   reassigned
+                to-reconsider:
+                    from: [submitted, wreck-report-sent]
+                    to:   to-be-reconsidered
+                validate-submission:
+                    from: submitted
+                    to:  to-be-refunded
+                validate-wreck-report:
+                    from: wreck-report-sent
+                    to:  selling-standby
+                write-sales-contract:
+                    from: selling-standby
+                    to:  to-be-refunded
+                write-wreck-report:
+                    from: in-progress
+                    to:  wreck-report-sent
+                submit-folder:
+                    from: in-progress
+                    to:  submitted
+                validate-refund:
+                  from: to-be-refunded
+                  to:  closed

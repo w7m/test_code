@@ -1,0 +1,7 @@
+<h3>Bonjour {{ user.firstName }} {{ user.lastName }},</h3>
+<p>Bienvenue dans TalanAssurance.</p>
+<p>Votre compte est bien crée avec succès avec l'email <strong>{{ user.email }}</strong>, pour y accéder  : </p>
+<p>Veuilez cliquer <a href="{{ url('check-activation', {'token': user.token}) }}">ICI</a> pour <strong>activer</strong> votre compte et
+    <strong>créer</strong> votre mot de passe.</p>
+<p>Cordialement,</p>
+<p>TalanAssurance</p>

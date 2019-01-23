@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vehicle{% endblock %}
+
+{% block body %}
+    <h1>Vehicle</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ vehicle.id }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ vehicle.type }}</td>
+            </tr>
+            <tr>
+                <th>RegistrationNumber</th>
+                <td>{{ vehicle.registrationNumber }}</td>
+            </tr>
+            <tr>
+                <th>GrayCard</th>
+                <td>{{ vehicle.grayCard }}</td>
+            </tr>
+            <tr>
+                <th>ImageSize</th>
+                <td>{{ vehicle.imageSize }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ vehicle.updatedAt ? vehicle.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>HorsePower</th>
+                <td>{{ vehicle.horsePower }}</td>
+            </tr>
+            <tr>
+                <th>DateOfRegistration</th>
+                <td>{{ vehicle.dateOfRegistration ? vehicle.dateOfRegistration|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>DoorsNumber</th>
+                <td>{{ vehicle.doorsNumber }}</td>
+            </tr>
+            <tr>
+                <th>Color</th>
+                <td>{{ vehicle.color }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('vehicle_index') }}">back to list</a>
+
+    <a href="{{ path('vehicle_edit', {'id': vehicle.id}) }}">edit</a>
+
+    {{ include('vehicle/_delete_form.html.twig') }}
+{% endblock %}

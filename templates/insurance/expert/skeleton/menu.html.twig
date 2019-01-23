@@ -1,0 +1,70 @@
+<ul class="sidebar navbar-nav">
+    <li class="nav-item">
+        <a class="nav-link active" id="menuExpert-home" href="{{ path('expert-home') }}">
+            <i class="fas fa-home"></i>
+            <span>Accueil</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="menuExpert-newFolders" href="{{ path('expert-Folders',{'state': 'created'}) }}">
+            <i class="fas fa-fw fa-folder"></i>
+            <span class="">Nouveaux dossiers</span>
+            <span class="badge badge-info badge-pill new-folder">
+                0
+                </span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="menuExpert-ongoing" href="{{ path('expert-Folders',{'state': 'in-progress'}) }}">
+            <i class="fas fa-fw fa-folder-open"></i>
+            <span>Dossiers en cours</span>
+            <span class="badge badge-primary badge-pill progress-folder">
+                0
+                </span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="menuExpert-returned" href="{{ path('expert-Folders',{'state': 'to-be-reconsidered'}) }}">
+            <i class="fas fa-fw fa-folder-minus"></i>
+            <span>Dossiers en retour</span>
+            <span class="badge badge-danger badge-pill returned-folder">
+                    0
+                </span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="menuExpert-archive" href="{{ path('expert-Folders',{'state': 'reassigned'}) }}">
+            <i class="fas fa-fw fa-newspaper"></i>
+            <span>Dossiers en contre expertise</span>
+            <span class="badge badge-warning badge-pill reassigned-folder">
+                0
+                </span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="menuExpert-archive" href="{{ path('expert-Folders',{'state': 'selling-standby'}) }}">
+            <i class="fas fa-fw fa-newspaper"></i>
+            <span>Dossiers epaves</span>
+            <span class="badge badge-success badge-pill selling-standby-folder">
+                    0
+                </span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="menuExpert-archive" href="{{ path('expert-Folders',{'state': 'closed'}) }}">
+            <i class="fas fa-fw fa-newspaper"></i>
+            <span>Archive</span>
+            <span class="badge badge-info badge-pill closed-folder">
+                    0
+                </span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ path('myPaiement') }}">
+            <i class="fas fa-fw fa-newspaper"></i>
+            <span>Voir mes remboursements</span>
+        </a>
+    </li>
+</ul>
+
+

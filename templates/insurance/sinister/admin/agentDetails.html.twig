@@ -1,0 +1,43 @@
+{% extends 'insurance/sinister/skeleton_page/baseSinistre.html.twig' %}
+{% block body %}
+    <div class="card">
+        <h4 class="card-header bg-info" style="color: white"><i class="fas fa-user-edit" style="color: white"></i> Les
+            informations de {{ role }}:</h4>
+        <div class="container">
+
+            <div class="row" style="margin-top: 50px">
+                <div class="col-9 offset-1">
+                    <table class="table table-hover">
+                        <tbody>
+                        <tr>
+                            <th>Nom</th>
+                            <td>{{ agent.lastName }}</td>
+                        </tr>
+                        <tr>
+                            <th>Prénom</th>
+                            <td>{{ agent.firstName }}</td>
+                        </tr>
+                        <tr>
+                            <th>phoneNumber</th>
+                            <td>{{ agent.phoneNumber }}</td>
+                        </tr>
+                        <tr>
+                            <th>Email</th>
+                            <td>{{ agent.email }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="row">
+                        <div class="col-12 d-flex flex-md-row-reverse">
+                            <a href="{{ path('agentUpdate',{'id':agent.id}) }}">
+                                <button class="btn btn-outline-dark">
+                                    <i class="fas fa-edit"></i> Modifier
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

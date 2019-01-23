@@ -1,0 +1,45 @@
+{% extends 'insurance/sinister/skeleton_page/baseSinistre.html.twig' %}
+
+{% block body %}
+
+
+<div class="card">
+    <div class="card-header bg-info d-flex justify-content-between">
+        <h4 style="color: white"><i class="fas fa-list-ul"></i> Liste des dossiers remboursés par le bon {{ bonReference.reference }}</h4>
+
+    </div>
+    <div class="col-xl-3 col-sm-6 mb-4 " style="margin-top: 50px">
+
+    </div>
+    <div class="container">
+        <div class="table-responsive">
+            <table class="table table-hover mt-3">
+                <thead>
+                        <tr>
+                            <th class="text-center">Référence de dossier</th>
+                            <th class="text-center">Matricule de voiture</th>
+                            <th class="text-center" >Remboursement expert</th>
+                            <th class="text-center" >Remboursement client</th>
+                            <th class="text-center" >Etat de dossier</th>
+
+                        </tr>
+                        {% for Refundedfolder in folders %}
+                            <tr>
+                                <td class="text-center">
+                                    <a href="{{ path("folderRefundedDetail",{'id':Refundedfolder.folder.id}) }}">{{ Refundedfolder.folder.ref }}</a></td>
+                                <td class="text-center">{{ Refundedfolder.folder.vehicle.registrationNumber }}</td>
+                                <td class="text-center">{{ Refundedfolder.honorary }}</td>
+                                <td class="text-center">{{ Refundedfolder.folder.getPaymentAmount }}</td>
+                                <td class="text-center">{{ Refundedfolder.folder.state }}</td>
+
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+
+            </tbody>
+        </table>
+
+    </div>
+{% endblock %}

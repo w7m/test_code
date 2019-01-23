@@ -1,0 +1,33 @@
+{% extends 'insurance/sinister/skeleton_page/baseSinistre.html.twig' %}
+
+{% block body %}
+    {% set expert = folder_service.getExpertInCharge(folder) %}
+    {#{{ dump(expert.id) }}#}
+    <h1>Choisir le nouvel expert</h1>
+    <table id="listExpertChoice" class="table ">
+            <thead>
+                <tr>
+                    <th>Selection</th>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>N°tel</th>
+                    <th>Email</th>
+                    <th>Matricule fiscale</th>
+                    <th>Raison sociale</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+    </table>
+    <button class="btn btn-outline-success" type="submit" id="reassign">Valider</button>
+    <input type="hidden" id="folderId" value="{{ folder.id }}">
+    <input type="hidden" id="lastExpertId" value="{{ expert.id }}">
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('expertChoiceList') }}
+    {{ encore_entry_script_tags('expertChoice') }}
+{% endblock %}
+

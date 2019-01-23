@@ -1,0 +1,35 @@
+<div class="card">
+    <h4 class="card-header"><i class="fas fa-file-invoice-dollar"></i> Liste des factures</h4>
+    {% if folder.bills is not empty %}
+        <div class="d-flex card-body container">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th>réference de facture</th>
+                        <th>type de facture</th>
+                        <th>date de facture</th>
+                        <th>date de saisie de facture</th>
+                        <th>travaux</th>
+                        <th>montant réel</th>
+                        <th>montant estimé</th>
+                    </tr>
+                    </thead>
+                    {% for bill in folder.bills %}
+                        <tr>
+                            <td class="table-active">{{ bill.billRef }}</td>
+                            <td class="table-active">{{ bill.type }}</td>
+                            <td class="table-active">{{ bill.billDate|date("m/d/Y H:i") }}</td>
+                            <td class="table-active">{{ bill.setDate|date("m/d/Y H:i") }}</td>
+                            <td class="table-active">{{ bill.works }}</td>
+                            <td class="table-active">{{ bill.realAmount }}</td>
+                            <td class="table-active">{{ bill.estimaedAmount }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    {% else %}
+        <h3>Pas de factures</h3>
+    {% endif %}
+</div>

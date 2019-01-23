@@ -1,0 +1,20 @@
+<div class="card">
+    <h4 class="card-header"><i class="fas fa-user-edit"></i> L'expert en charge:</h4>
+    <div class="d-flex card-body">
+        <div class="col-6">
+            <p><span class="font-weight-bold text-success">Nom complet: </span>{{ expert.firstName~' '~expert.lastName }}
+            </p>
+            <p>
+                <span class="font-weight-bold text-success">N° Tel: </span>{{ expert.phoneNumber }}
+            </p>
+        </div>
+        <div class="col-6">
+            <p>
+                <span class="font-weight-bold text-success">Matricule fiscale:: </span>{{ expert.registrationTaxNumber }}
+            </p>
+            <p>
+                <span class="font-weight-bold text-success">Nom de la societe: </span>{{ expert.companyName }}
+            </p>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,22 @@
+{% extends 'insurance/expert/skeleton/baseExpert.html.twig' %}
+{% block body %}
+    {% for flashMessage in app.session.flashbag.get('error') %}
+        <div class="alert alert-danger">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+<div class="card">
+    <h4 class="card-header">Modifier Votre compte</h4>
+    <div class="d-flex card-body">
+    <div class="col-6">
+        <h1>{{ expert.firstName~' '~expert.lastName}}</h1><br>
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary" value="Modifier">
+        </div>
+        {{ form_end(form) }}
+    </div>
+    </div>
+</div>
+{% endblock %}

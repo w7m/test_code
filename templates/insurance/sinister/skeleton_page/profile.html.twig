@@ -1,0 +1,21 @@
+{% extends 'insurance/sinister/skeleton_page/baseSinistre.html.twig' %}
+{% block body %}
+    <div class="card">
+        <div class="card-header bg-info">
+            <h4 style="color: white"><i class="fas fa-user-edit"></i> Modifier votre compte</h4>
+        </div>
+        <div class="d-flex card-body">
+            <div class="col-6">
+                <h1>{{ insurer.firstName~' '~insurer.lastName }}</h1><br>
+                {{ form_start(form) }}
+                {{ form_label(form.insurerId,'Matricule') }}
+                {{ form_widget(form.insurerId) }}
+                {{ form_widget(form) }}
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary" value="Modifier">
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

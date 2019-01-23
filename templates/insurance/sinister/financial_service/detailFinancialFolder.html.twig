@@ -1,0 +1,158 @@
+{% extends 'insurance/sinister/skeleton_page/baseSinistre.html.twig' %}
+{% block body %}
+    <div class="card">
+
+        <h4 class="card-header bg-info" style="color: white"><i class="fa fa-info"></i> Les informations de
+            dossier de reference: {{ folder.ref }}
+        </h4>
+        <div class="col-8">
+
+            <fieldset style="border: 2px lightgray solid !important;border-radius: 5px !important;">
+
+                <legend style="font-weight: bold!important;  font-size: 25px!important;
+ ;all: unset;margin-left: 0.8em !important; padding: 0.4em 0.8em;color:black ">Dossier
+                </legend>
+
+
+                <table class="table table-borderless">
+
+                    <tbody>
+                    <tr>
+                        <th>Référence</th>
+                        <td>{{ folder.ref }}</td>
+                    </tr>
+                    <tr>
+                        <th>state</th>
+                        <td>{{ folder.state }}</td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </fieldset>
+        </div>
+        <div class="col-8">
+
+            <fieldset style="border: 2px lightgray solid !important;border-radius: 5px !important;">
+
+                <legend style="font-weight: bold!important;  font-size: 25px!important;
+ ;all: unset;margin-left: 0.8em !important; padding: 0.4em 0.8em;color:black ">Assuré
+                </legend>
+
+                <table class="table table-borderless">
+                    <tbody>
+                    <tr>
+                        <th>Nom complet</th>
+                        <td>{{ ensured.firstName }} {{ ensured.lastName }}</td>
+                    </tr>
+                    <tr>
+                        <th>CIN</th>
+                        <td>{{ ensured.cin }}</td>
+                    </tr>
+                    <tr>
+                        <th>Email</th>
+                        <td>{{ ensured.email }}</td>
+                    </tr>
+                    <tr>
+                        <th>Remboursement</th>
+                        <td>{{ folder.getPaymentAmount }}</td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </fieldset>
+        </div>
+        <div class="col-8">
+            <fieldset style="border: 2px lightgray solid !important;border-radius: 5px !important;">
+
+                <legend style="font-weight: bold!important;  font-size: 25px!important;
+ ;all: unset;margin-left: 0.8em !important; padding: 0.4em 0.8em;color:black ">Véhicule
+                </legend>
+
+
+                <table class="table table-borderless">
+                    <tbody>
+                    <tr>
+                        <th>Type</th>
+                        <td>{{ vehicle.type }}</td>
+                    </tr>
+                    <tr>
+                        <th>Matricule</th>
+                        <td>{{ vehicle.registrationNumber }}</td>
+                    </tr>
+                    <tr>
+                        <th>Carte grise</th>
+                        <td>{{ vehicle.getGrayCard }}</td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </fieldset>
+        </div>
+        <div class="col-8">
+
+            <fieldset style="border: 2px lightgray solid !important;border-radius: 5px !important;">
+
+                <legend style="font-weight: bold!important;  font-size: 25px!important;
+ ;all: unset;margin-left: 0.8em !important; padding: 0.4em 0.8em;color:black ">Expert
+                </legend>
+
+
+                <table class="table table-borderless">
+
+                    <tbody>
+                    <tr>
+                        <th>Nom complet</th>
+                        <td>{{ expertise.expert.firstName }}  {{ expertise.expert.lastName }}</td>
+                    </tr>
+                    <tr>
+                        <th>state</th>
+                        <td>{{ expertise.expert.getRegistrationTaxNumber }}</td>
+                    </tr>
+                    <tr>
+                        <th>Société</th>
+                        <td>{{ expertise.expert.getCompanyName }}</td>
+                    </tr>
+                    <tr>
+                        <th>adresse</th>
+                        <td>{{ expertise.expert.getCity }} {{ expertise.expert.getPostalCode }} {{ expertise.expert.getAddress }}</td>
+                    </tr>
+
+
+                    </tbody>
+                </table>
+            </fieldset>
+        </div>
+        <div class="col-8">
+
+            <fieldset style="border: 2px lightgray solid !important;border-radius: 5px !important;">
+
+                <legend style="font-weight: bold!important;  font-size: 25px!important;
+ ;all: unset;margin-left: 0.8em !important; padding: 0.4em 0.8em;color:black ">Expertise
+                </legend>
+
+
+                <table class="table table-borderless">
+
+                    <tbody>
+                    <tr>
+                        <th>L'Honoraire de l'expertise</th>
+                        <td>{{ expertise.honorary }}</td>
+                    </tr>
+                    <tr>
+                        <th>Niveau d'expertise</th>
+                        <td>{{ expertise.getExpertiseLevel }}</td>
+                    </tr>
+                    <tr>
+                        <th>l'état de l'expertise</th>
+                        <td>{{ expertise.getRefundStatus }}</td>
+                    </tr>
+
+
+                    </tbody>
+                </table>
+            </fieldset>
+        </div>
+
+
+    </div>
+{% endblock %}

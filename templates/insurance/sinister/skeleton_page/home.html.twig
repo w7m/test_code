@@ -1,0 +1,597 @@
+{% extends 'insurance/sinister/skeleton_page/baseSinistre.html.twig' %}
+
+
+{% block body %}
+    {% block javascripts %}
+        {{ parent() }}
+        {{ encore_entry_script_tags('jqueryFloat') }}
+        {{ encore_entry_script_tags('jqueryFloatRealplugin') }}
+        {{ encore_entry_script_tags('floatRealFunction') }}
+        {{ encore_entry_script_tags('pluginCharts') }}
+    {% endblock %}
+    {% block stylesheets %}
+        {{ parent() }}
+        {{ encore_entry_link_tags('floatRealTime') }}
+    {% endblock %}
+    <h5 class="mb-3"><b>Bonjour {{ app.user.firstName|capitalize }} {{ app.user.lastName|capitalize }} </b></h5>
+    {% if is_granted('ROLE_ADMIN') %}
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-xl-3 col-sm-6 mb-3">
+                    <div class="card text-white bg-primary o-hidden h-100">
+                        <div class="card-body">
+                            <div class="card-body-icon">
+                                <i class="fas fa-fw fa-folder-open"></i>
+                            </div>
+                            <div class="mr-5">{{ folderByState.created }} Nouveaux dossiers</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 mb-3">
+                    <div class="card text-white bg-success o-hidden h-100">
+                        <div class="card-body">
+                            <div class="card-body-icon">
+                                <i class="fas fa-fw fa-folder-open"></i>
+                            </div>
+                            {% set folderTobeValidate = folderByState.WreckReportSent + folderByState.submitted %}
+                            <div class="mr-5">{{ folderTobeValidate }} Dossiers en attente de validation</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 mb-3">
+                    <div class="card text-white bg-warning o-hidden h-100">
+                        <div class="card-body">
+                            <div class="card-body-icon">
+                                <i class="fas fa-fw fa-folder-open"></i>
+                            </div>
+                            <div class="mr-5">{{ folderByState.toBeRefended }} Dossiers en attente de remboursement
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 mb-3">
+                    <div class="card text-white bg-danger o-hidden h-100">
+                        <div class="card-body">
+                            <div class="card-body-icon">
+                                <i class="fas fa-fw fa-folder"></i>
+                            </div>
+                            <div class="mr-5">{{ folderByState.closed }} Dossiers remboursés</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xl-6 col-lg-6 col-sm-12 col-md-12 mb-3 h-50">
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            Statistiques des dossiers
+                        </div>
+                        <div class="card-body" style="width: auto;">
+                            <div class="chartjs-size-monitor "
+                            >
+                                <div class="chartjs-size-monitor-expand">
+                                    <div style="position:absolute;width:100px;height:100px;left:0;top:0"></div>
+                                </div>
+                                <div class="chartjs-size-monitor-shrink"
+                                >
+                                    <div></div>
+                                </div>
+                            </div>
+                            <canvas id="myPieChart" class="chartjs-render-monitor"
+                                    style="display: block; width:200px;  height: 200px;"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-sm-12 col-md-12 mb-3 h-50">
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            Création des dossiers en temps réel
+                        </div>
+                        <div class="card-body">
+                            <div class="demo-container">
+                                <div id="placeholder" class="demo-placeholder" style="padding: 0px;">
+                                    <canvas class="flot-base"
+                                            style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 818px; height: 413px;"></canvas>
+                                    <div class="flot-text"
+                                         style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; font-size: smaller; color: rgb(84, 84, 84);">
+                                        <div class="flot-y-axis flot-y1-axis yAxis y1Axis"
+                                             style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; display: block;">
+                                            <div class="flot-tick-label tickLabel"
+                                                 style="position: absolute; top: 397px; left: 14px; text-align: right;">
+                                                0
+                                            </div>
+                                            <div class="flot-tick-label tickLabel"
+                                                 style="position: absolute; top: 318px; left: 8px; text-align: right;">
+                                                20
+                                            </div>
+                                            <div class="flot-tick-label tickLabel"
+                                                 style="position: absolute; top: 238px; left: 8px; text-align: right;">
+                                                40
+                                            </div>
+                                            <div class="flot-tick-label tickLabel"
+                                                 style="position: absolute; top: 159px; left: 8px; text-align: right;">
+                                                60
+                                            </div>
+                                            <div class="flot-tick-label tickLabel"
+                                                 style="position: absolute; top: 79px; left: 8px; text-align: right;">80
+                                            </div>
+                                            <div class="flot-tick-label tickLabel"
+                                                 style="position: absolute; top: 0px; left: 2px; text-align: right;">100
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <canvas class="flot-overlay" width="818" height="413"
+                                            style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 818px; height: 413px;"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <script>
+            Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+            Chart.defaults.global.defaultFontColor = '#292b2c';
+
+            var ctx = document.getElementById("myPieChart");
+            var myPieChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ["Nouveaux", "En attente de Validation", " Dossiers en attente de remboursement", "Dossiers rembourés"],
+                    datasets: [{
+                        data: [{{ folderByState.created }}, {{ folderTobeValidate }}, {{ folderByState.toBeRefended }}, {{ folderByState.closed }}],
+                        backgroundColor: ['#007bff', '#28a745', '#ffc107', '#dc3545'],
+                    }],
+                },
+            });
+        </script>
+    {% endif %}
+    {% if is_granted('ROLE_RECEPTIONIST') %}
+        <div class="container-fluid">
+            <div class="row d-flex justify-content-center">
+                <div class="col-xl-4 col-sm-6 mb-3">
+                    <div class="card text-white bg-success o-hidden h-100">
+                        <div class="card-body">
+                            <div class="card-body-icon">
+                                <i class="fas fa-fw fa-folder"></i>
+                            </div>
+                            <div class="mr-5 text-center">{{ numbersFolders }} Dossiers</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-sm-6 mb-3">
+                    <div class="card text-white bg-primary o-hidden h-100">
+                        <div class="card-body">
+                            <div class="card-body-icon">
+                                <i class="fas fa-fw fa-folder"></i>
+                            </div>
+                            <div class="mr-5 text-center">{{ numbersContract }} Contrats
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-12 ">
+                    <div class="card-header text-center mb-2">
+                        <i class="fas fa-chart-bar"></i>
+                        Statistiques des contrats de l'année actuelle
+                    </div>
+                    <div class="card-body">
+                        <canvas id="myBarChart3" width="100%" height="30%"></canvas>
+                    </div>
+                </div>
+                <div class="col-12 ">
+                    <div class="card-header text-center mb-2">
+                        <i class="fas fa-chart-bar"></i>
+                        Statistiques des dossiers de l'année actuelle
+                    </div>
+                    <div class="card-body">
+                        <canvas id="myBarChart4" width="100%" height="30%"></canvas>
+                    </div>
+                </div>
+            </div>
+            <script>
+
+                Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+                Chart.defaults.global.defaultFontColor = '#292b2c';
+                var ctx = document.getElementById("myBarChart3");
+                var myLineChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"],
+                        datasets: [{
+                            label: "Nombre",
+                            backgroundColor: "rgba(2,117,216,1)",
+                            borderColor: "rgba(2,117,216,1)",
+                            data: [{{ vehicleByMonths.january }},
+                                {{ vehicleByMonths.february }},
+                                {{ vehicleByMonths.march }},
+                                {{ vehicleByMonths.april }},
+                                {{ vehicleByMonths.may }},
+                                {{ vehicleByMonths.june }},
+                                {{ vehicleByMonths.july }},
+                                {{ vehicleByMonths.august }},
+                                {{ vehicleByMonths.september }},
+                                {{ vehicleByMonths.october }},
+                                {{ vehicleByMonths.november }},
+                                {{ vehicleByMonths.december }}],
+                        }],
+                    },
+                    options: {
+                        scales: {
+                            xAxes: [{
+                                time: {
+                                    unit: 'month'
+                                },
+                                gridLines: {
+                                    display: false
+                                },
+                                ticks: {
+                                    maxTicksLimit: 10
+                                }
+                            }],
+                            yAxes: [{
+                                ticks: {
+                                    min: 0,
+                                    max: {{ max(vehicleByMonths) }},
+                                    maxTicksLimit: {{ max(vehicleByMonths) }} +1
+                                },
+                                gridLines: {
+                                    display: true
+                                }
+                            }],
+                        },
+                        legend: {
+                            display: false
+                        }
+                    }
+                });
+            </script>
+            <script>
+
+                Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+                Chart.defaults.global.defaultFontColor = '#292b2c';
+                var ctx = document.getElementById("myBarChart4");
+                var myLineChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"],
+                        datasets: [{
+                            label: "Nombre",
+                            backgroundColor: "rgba(2,117,216,1)",
+                            borderColor: "rgba(2,117,216,1)",
+                            data: [{{ listFolder.january }},
+                                {{ listFolder.february }},
+                                {{ listFolder.march }},
+                                {{ listFolder.april }},
+                                {{ listFolder.may }},
+                                {{ listFolder.june }},
+                                {{ listFolder.july }},
+                                {{ listFolder.august }},
+                                {{ listFolder.september }},
+                                {{ listFolder.october }},
+                                {{ listFolder.november }},
+                                {{ listFolder.december }}],
+                        }],
+                    },
+                    options: {
+                        scales: {
+                            xAxes: [{
+                                time: {
+                                    unit: 'month'
+                                },
+                                gridLines: {
+                                    display: false
+                                },
+                                ticks: {
+                                    maxTicksLimit: 10
+                                }
+                            }],
+                            yAxes: [{
+                                ticks: {
+                                    min: 0,
+                                    max: {{ max(listFolder) }},
+                                    maxTicksLimit: {{ max(listFolder) }} +1
+                                },
+                                gridLines: {
+                                    display: true
+                                }
+                            }],
+                        },
+                        legend: {
+                            display: false
+                        }
+                    }
+                });
+            </script>
+        </div>
+    {% endif %}
+    {% if is_granted('ROLE_VALIDATOR') %}
+
+        <div class="container-fluid">
+
+            <div class="row d-flex justify-content-center">
+                <div class="col-xl-3 col-sm-6 mb-3">
+                    <div class="card text-white bg-primary o-hidden h-100">
+                        <div class="card-body">
+                            <div class="card-body-icon">
+                                <i class="fas fa-fw fa-folder"></i>
+                            </div>
+                            <div class="mr-5">{{ folderByState.toBeRefended }} Dossiers validés</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 mb-3">
+                    <div class="card text-white bg-success o-hidden h-100">
+                        <div class="card-body">
+                            <div class="card-body-icon">
+                                <i class="fas fa-fw fa-folder-open"></i>
+                            </div>
+                            <div class="mr-5">{{ folderByState.submitted }} Dossiers non validés</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 mb-3">
+                    <div class="card text-white bg-warning o-hidden h-100">
+                        <div class="card-body">
+                            <div class="card-body-icon">
+                                <i class="fas fa-fw fa-folder"></i>
+                            </div>
+                            <div class="mr-5">{{ folderByState.sellingStandby }} Dossiers épaves validés
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 mb-3">
+                    <div class="card text-white bg-danger o-hidden h-100">
+                        <div class="card-body">
+                            <div class="card-body-icon">
+                                <i class="fas fa-fw fa-folder-open "></i>
+                            </div>
+                            <div class="mr-5">{{ folderByState.WreckReportSent }} Dossiers épaves non validés</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 ">
+                    <div class="card-header text-center mb-2">
+                        <i class="fas fa-chart-bar"></i>
+                        Statistiques des dossiers Validés de l'année actuelle
+                    </div>
+                    <div class="card-body">
+                        <canvas id="myBarChart1" width="100%" height="30%"></canvas>
+                    </div>
+                </div>
+                <div class="col-12 mb-2">
+                    <div class="card-header text-center mb-2">
+                        <i class="fas fa-chart-bar"></i>
+                        Statistiques des dossiers épaves validés de l'année actuelle
+                    </div>
+                    <div class="card-body2 ">
+                        <canvas id="myBarChart2" width="100%" height="30%"></canvas>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <script>
+
+            Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+            Chart.defaults.global.defaultFontColor = '#292b2c';
+            var ctx = document.getElementById("myBarChart1");
+            var myLineChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"],
+                    datasets: [{
+                        label: "Nombre",
+                        backgroundColor: "rgba(2,117,216,1)",
+                        borderColor: "rgba(2,117,216,1)",
+                        data: [{{ foldersMonthValid.january }},
+                            {{ foldersMonthValid.february }},
+                            {{ foldersMonthValid.march }},
+                            {{ foldersMonthValid.april }},
+                            {{ foldersMonthValid.may }},
+                            {{ foldersMonthValid.june }},
+                            {{ foldersMonthValid.july }},
+                            {{ foldersMonthValid.august }},
+                            {{ foldersMonthValid.september }},
+                            {{ foldersMonthValid.october }},
+                            {{ foldersMonthValid.november }},
+                            {{ foldersMonthValid.december }}],
+                    }],
+                },
+                options: {
+                    scales: {
+                        xAxes: [{
+                            time: {
+                                unit: 'month'
+                            },
+                            gridLines: {
+                                display: false
+                            },
+                            ticks: {
+                                maxTicksLimit: 10
+                            }
+                        }],
+                        yAxes: [{
+                            ticks: {
+                                min: 0,
+                                max: {{ max(foldersMonthValid) }},
+                                maxTicksLimit: {{ max(foldersMonthValid) }} +1
+                            },
+                            gridLines: {
+                                display: true
+                            }
+                        }],
+                    },
+                    legend: {
+                        display: false
+                    }
+                }
+            });
+
+            var ctx = document.getElementById("myBarChart2");
+            var myLineChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"],
+                    datasets: [{
+                        label: "Nombre",
+                        backgroundColor: "rgba(2,117,216,1)",
+                        borderColor: "rgba(2,117,216,1)",
+                        data: [{{ foldersMonthValidWreck.january }},
+                            {{ foldersMonthValidWreck.february }},
+                            {{ foldersMonthValidWreck.march }},
+                            {{ foldersMonthValidWreck.april }},
+                            {{ foldersMonthValidWreck.may }},
+                            {{ foldersMonthValidWreck.june }},
+                            {{ foldersMonthValidWreck.july }},
+                            {{ foldersMonthValidWreck.august }},
+                            {{ foldersMonthValidWreck.september }},
+                            {{ foldersMonthValidWreck.october }},
+                            {{ foldersMonthValidWreck.november }},
+                            {{ foldersMonthValidWreck.december }}],
+                    }],
+                },
+                options: {
+                    scales: {
+                        xAxes: [{
+                            time: {
+                                unit: 'month'
+                            },
+                            gridLines: {
+                                display: false
+                            },
+                            ticks: {
+                                maxTicksLimit: 10
+                            }
+                        }],
+                        yAxes: [{
+                            ticks: {
+                                min: 0,
+                                max: {{ max(foldersMonthValidWreck) }},
+                                maxTicksLimit: {{ max(foldersMonthValidWreck) }} +1
+                            },
+                            gridLines: {
+                                display: true
+                            }
+                        }],
+                    },
+                    legend: {
+                        display: false
+                    }
+                }
+            });
+        </script>
+    {% endif %}
+    {% if is_granted('ROLE_FINANCIAL') %}
+
+        <div class="row d-flex justify-content-center">
+            <div class="col-xl-4 col-sm-6 mb-3">
+                <div class="card text-white bg-success o-hidden h-100">
+                    <div class="card-body">
+                        <div class="card-body-icon">
+                            <i class="fas fa-fw fa-folder-open"></i>
+                        </div>
+                        <div class="mr-5 text-center">{{ folderByState.closed }} Dossiers remboursés</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-sm-6 mb-3">
+                <div class="card text-white bg-primary o-hidden h-100">
+                    <div class="card-body">
+                        <div class="card-body-icon">
+                            <i class="fas fa-fw fa-folder-open"></i>
+                        </div>
+                        <div class="mr-5 text-center">{{ folderByState.toBeRefended + folderByState.sellingStandby }}
+                            Dossiers non
+                            remboursés
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-12 ">
+                <div class="card-header text-center mb-2">
+                    <i class="fas fa-chart-bar"></i>
+                    Statistiques des dossiers remboursés de l'année actuelle
+                </div>
+                <div class="card-body">
+                    <canvas id="myBarChart1" width="100%" height="30%"></canvas>
+                </div>
+            </div>
+        </div>
+        <script>
+
+            Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+            Chart.defaults.global.defaultFontColor = '#292b2c';
+            var ctx = document.getElementById("myBarChart1");
+            var myLineChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"],
+                    datasets: [{
+                        label: "Nombre",
+                        backgroundColor: "rgba(2,117,216,1)",
+                        borderColor: "rgba(2,117,216,1)",
+                        data: [{{ foldersMonthValid.january }},
+                            {{ foldersMonthValid.february }},
+                            {{ foldersMonthValid.march }},
+                            {{ foldersMonthValid.april }},
+                            {{ foldersMonthValid.may }},
+                            {{ foldersMonthValid.june }},
+                            {{ foldersMonthValid.july }},
+                            {{ foldersMonthValid.august }},
+                            {{ foldersMonthValid.september }},
+                            {{ foldersMonthValid.october }},
+                            {{ foldersMonthValid.november }},
+                            {{ foldersMonthValid.december }}],
+                    }],
+                },
+                options: {
+                    scales: {
+                        xAxes: [{
+                            time: {
+                                unit: 'month'
+                            },
+                            gridLines: {
+                                display: false
+                            },
+                            ticks: {
+                                maxTicksLimit: 10
+                            }
+                        }],
+                        yAxes: [{
+                            ticks: {
+                                min: 0,
+                                max: {{ max(foldersMonthValid) }},
+                                maxTicksLimit: {{ max(foldersMonthValid) }} +1
+                            },
+                            gridLines: {
+                                display: true
+                            }
+                        }],
+                    },
+                    legend: {
+                        display: false
+                    }
+                }
+            });
+        </script>
+    {% endif %}
+{% endblock %}
+
+
+

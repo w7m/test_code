@@ -1,0 +1,64 @@
+
+{% extends 'insurance/sinister/skeleton_page/baseSinistre.html.twig' %}
+{% block title %}Parameter{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Paramètres de la société</h1>
+        <div class="row">
+            <div class="col-9 offset-1">
+                <table class="table table-hover">
+                    <tbody>
+                    <tr>
+                        <th>Prix d'une photo (dt)</th>
+                        <td>{{ parameter.photoPrice }} dt</td>
+                    </tr>
+                    <tr>
+                        <th>Frais d'ouverture d'un dossier</th>
+                        <td>{{ parameter.openingFileExpense }} dt</td>
+                    </tr>
+                    <tr>
+                        <th>Frais d'expertise (dt)</th>
+                        <td>{{ parameter.expertiseFees }} dt</td>
+                    </tr>
+                    <tr>
+                        <th>Pourcentage par factures dossiers (%)</th>
+                        <td>{{ parameter.billPercentage }} %</td>
+                    </tr>
+                    <tr>
+                        <th>Raison sociale de la société</th>
+                        <td>{{ parameter.insuranceCompanyName }}</td>
+                    </tr>
+                    <tr>
+                        <th>Adresse de la société</th>
+                        <td>{{ parameter.insurerAddress }}</td>
+                    </tr>
+                    <tr>
+                        <th>Ville de la société</th>
+                        <td>{{ parameter.insurerCity }}</td>
+                    </tr>
+                    <tr>
+                        <th>Code postale de la société</th>
+                        <td>{{ parameter.postcodeInsurer }}</td>
+                    </tr>
+                    <tr>
+                        <th>N° tel de la société</th>
+                        <td>{{ parameter.insurancePhone }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-center">
+                        <a href="{{ path('parameter_edit') }}">
+                            <button class="btn btn-outline-dark">
+                                <i class="fas fa-edit"></i> Mettre à jour
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

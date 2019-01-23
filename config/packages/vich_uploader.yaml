@@ -1,0 +1,17 @@
+vich_uploader:
+    db_driver: orm
+
+    mappings:
+        grayCard:
+            uri_prefix: /images/grayCard
+            upload_destination: '%kernel.project_dir%/public/images/grayCard'
+
+            inject_on_load: false
+            delete_on_update: false
+            delete_on_remove: true
+        constat_image:
+            uri_prefix: /images/constat
+            upload_destination: '%kernel.project_dir%/public/images/constat'
+            inject_on_load: false
+            delete_on_update: true
+            delete_on_remove: true

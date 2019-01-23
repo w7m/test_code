@@ -1,0 +1,14 @@
+{% for folder in folders %}
+    {% set expert = folder_service.getExpertInCharge(folder) %}
+    <tr>
+        <td class="text-center">{{ folder.ref }}</td>
+        <td class="text-center">{{ type }}</td>
+        <td></td>
+        {#<td class="text-center">{{ expert.firstName~' '~expert.lastName }}</td>#}
+        <td class="text-center">{{ folder.vehicle.registrationNumber }}</td>
+        <td class="text-center">
+            <a href="{{ path('folder-details',{'id': folder.id}) }}"><i class="fas fa-search"></i></a>
+            <a href="#"><i class="fas fa-history"></i></a>
+        </td>
+    </tr>
+{% endfor %}

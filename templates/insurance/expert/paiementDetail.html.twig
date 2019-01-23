@@ -1,0 +1,42 @@
+{% extends 'insurance/expert/skeleton/baseExpert.html.twig' %}
+
+{% block body %}
+    <div class="card">
+        <div class="card-header bg-info d-flex justify-content-between">
+            <h4 style="color: white"><i class="fas fa-list-ul"></i> Liste des dossiers remboursés </h4>
+
+        </div>
+        <div class="col-xl-3 col-sm-6 mb-4 " style="margin-top: 50px">
+
+        </div>
+        <div class="container">
+            <div class="table-responsive">
+                <table class="table table-hover mt-3">
+                    <thead>
+                    <tr>
+                        <th class="text-center">Référence de dossier</th>
+                        <th class="text-center">Matricule de voiture</th>
+                        <th class="text-center" >Honoraire</th>
+                        <th class="text-center" >Etat de dossier</th>
+
+                    </tr>
+                    {% for refundedFolder in folders %}
+                        <tr>
+                            <td class="text-center">{{ refundedFolder.folder.ref }}</td>
+                            <td class="text-center">{{ refundedFolder.folder.vehicle.registrationNumber }}</td>
+                            <td class="text-center">{{ refundedFolder.honorary }}</td>
+                            <td class="text-center">{{ refundedFolder.folder.state }}</td>
+
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+
+        </tbody>
+        </table>
+
+    </div>
+{% endblock %}
+
+

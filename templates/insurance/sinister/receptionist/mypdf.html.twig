@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Ordre de Mission</title>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+
+        /* On teste quelques d'options css différentes */
+        h1 {
+            text-transform: uppercase;
+            text-align: center;
+            font-weight: bold;
+            color: #17A2B8;
+        }
+
+        h2 {
+            color: #17A2B8;
+            font-style: italic;
+            font-weight: bold;
+            border: solid 1px #ccc;
+        }
+
+    </style>
+</head>
+<body>
+<h1>{{ title }}</h1>
+<div class="text-info my-3">
+    Date de création: {{ "now"|date("d/m/Y") }}
+</div>
+
+<h1>véhicule</h1>
+<table class="table table-bordered table-sm">
+    <tbody>
+    <tr>
+        <th scope="row">type de véhicule</th>
+        <td>{{ vehicle.type }}</td>
+    </tr>
+    <tr>
+        <th scope="row">matricule</th>
+        <td>{{ vehicle.registrationNumber }}</td>
+    </tr>
+    <tr>
+        <th scope="row">carte grise</th>
+        <td>{{ vehicle.grayCard }}</td>
+    </tr>
+    <tr>
+        <th scope="row">nombre de portes</th>
+        <td>{{ vehicle.doorsNumber }}</td>
+    </tr>
+    <tr>
+        <th scope="row">puissance fiscale</th>
+        <td>{{ vehicle.horsePower }}</td>
+    </tr>
+    <tr>
+        <th scope="row">date premiere mise circulation</th>
+        <td>{{ vehicle.dateOfRegistration|date("d/m/Y") }}</td>
+    </tr>
+    <tr>
+        <th scope="row">color</th>
+        <td>{{ vehicle.color }}</td>
+    </tr>
+
+    </tbody>
+</table>
+<h1>assurée</h1>
+<table class="table table-bordered table-sm">
+
+    <tbody>
+    <tr>
+
+        <th scope="row">Nom</th>
+        <td>{{ vehicle.ensured.lastName }}</td>
+    </tr>
+    <tr>
+
+        <th scope="row">prénom</th>
+        <td>{{ vehicle.ensured.firstName }}</td>
+    </tr>
+    <tr>
+
+        <th scope="row">cin</th>
+        <td>{{ vehicle.ensured.cin }}</td>
+    </tr>
+    <tr>
+
+        <th scope="row">email</th>
+        <td>{{ vehicle.ensured.email }}</td>
+    </tr>
+    <tr>
+
+        <th scope="row">ville</th>
+        <td>{{ vehicle.ensured.city }}</td>
+    </tr>
+
+    </tbody>
+</table>
+<h1>Expert affecté</h1>
+<table id="listExpertChoiceReceptionist" class="table table-bordered table-sm">
+    <thead>
+    <tr class="table-light">
+
+        <th>Prénom</th>
+        <th>Nom</th>
+        <th>Téléphone</th>
+        <th>Email</th>
+        <th>Matricule Fiscale</th>
+        <th>Nom de l'entreprise</th>
+
+
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr class="table-light">
+
+        <td>{{ expert.firstName }}</td>
+        <td>{{ expert.lastName }}</td>
+        <td>{{ expert.phoneNumber }}</td>
+        <td>{{ expert.email }}</td>
+        <td>{{ expert.registrationTaxNumber }}</td>
+        <td>{{ expert.companyName }}</td>
+
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

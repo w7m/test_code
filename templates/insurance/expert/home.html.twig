@@ -1,0 +1,58 @@
+{% extends 'insurance/expert/skeleton/baseExpert.html.twig' %}
+{% block body %}
+    <div class="container-fluid">
+        <h5 class="mb-3"><b>Bonjour  {{ app.user.firstName|capitalize }} {{ app.user.lastName|capitalize}} </b></h5>
+        <div class="row">
+            <div class="col-xl-7 col-lg-7 col-md-12 col-md-12 ">
+                <div class="card-header text-center">
+                    <i class="fas fa-chart-bar"></i>
+                    Statistiques des dossiers du mois en cours
+                </div>
+                <div class="card-body">
+                    <canvas id="myBarChart" width="100%" height="73%"></canvas>
+                </div>
+            </div>
+            <div class="col-xl-5 col-lg-5 col-md-12 col-md-12 text-center">
+                <div class="card-header">
+                    <i class="fas fa-history"></i>
+                    {% if tenHistoryFolders is defined and tenHistoryFolders is not null %}
+                    Historique des opérations
+                </div>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">Référence</th>
+                        <th scope="col">Statut</th>
+                        <th scope="col">Date d'action</th>
+                        <th scope="col">Type</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for tenHistoryFolder in tenHistoryFolders %}
+                    <tr>
+                        <th scope="row">{{ tenHistoryFolder.folder.ref }}</th>
+                        <th scope="row">{{ tenHistoryFolder.folder.state }}</th>
+                        <td>{{ tenHistoryFolder.action_date|date('y/m/d') }}</td>
+                        <td>{{ tenHistoryFolder.type }}</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                    Pas d'historique pour le moment
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}
+
+    {% block javascripts %}
+        {{ parent() }}
+        {{ encore_entry_script_tags('pluginCharts') }}
+        {{ encore_entry_script_tags('chartFolderExpert') }}
+    {% endblock %}
+
+
+

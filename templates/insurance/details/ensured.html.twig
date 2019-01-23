@@ -1,0 +1,28 @@
+<div class="card">
+    <h4 class="card-header"> <i class="fas fa-user-injured"></i> L'assuré</h4>
+    <div class="d-flex card-body">
+        <div class="col-6">
+            <p>
+                <span class="font-weight-bold text-success">Nom et prénom : </span>{{ folder.vehicle.ensured.firstName~' '~folder.vehicle.ensured.lastName }}
+            </p>
+            <p>
+                <span class="font-weight-bold text-success">N° CIN : </span>{{ folder.vehicle.ensured.cin }}
+            </p>
+            <p>
+                <span class="font-weight-bold text-success">N° téléphone : </span>{{ folder.vehicle.ensured.phone }}
+            </p>
+            <p>
+                <span class="font-weight-bold text-success">Email  : </span>{{ folder.vehicle.ensured.email }}
+            </p>
+        </div>
+        <div class="col-6">
+            <p><span class="font-weight-bold text-success">Adresse : </span></p>
+            <p>
+                <span class="font-weight-bold text-success">Ville : </span>{{ folder.vehicle.ensured.city }}
+            </p>
+            <p>
+                <span class="font-weight-bold text-success">Code postal : </span>{{ folder.vehicle.ensured.zipCode }}
+            </p>
+        </div>
+    </div>
+</div>

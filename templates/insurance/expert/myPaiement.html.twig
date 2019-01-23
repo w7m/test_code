@@ -1,0 +1,39 @@
+{% extends 'insurance/expert/skeleton/baseExpert.html.twig' %}
+{% block body %}
+    <div class="card">
+        <div class="card-header bg-info d-flex justify-content-between">
+            <h4 style="color: white"><i class="fas fa-list-ul"></i> Liste des paiements</h4>
+
+        </div>
+        <div class="col-xl-3 col-sm-6 mb-4 " style="margin-top: 50px">
+
+        </div>
+
+        <div class="container">
+            <div class="table-responsive">
+                <table class="table table-hover mt-3">
+                    <thead>
+                    <tr>
+                        <th>Réference de paiement</th>
+                        <th>Remboursement </th>
+                        <th>date de remboursement</th>
+                        <th>Details</th>
+                    </tr>
+
+
+                    </thead>
+                    {% if expertises is not empty %}
+                        {% for expertise in expertises %}
+
+                            <tr>
+                                <td>{{ expertise.getPaiment.reference }}</td>
+                                <td>{{ expertise.getPaiment.getAmount }}</td>
+                                <td>{{ expertise.getPaiment.getPaimentDate |date }} </td>
+                                <td><a href="{{ path('paiementDetail',{'id':expertise.getPaiment.id}) }}"><i class=" btn btn-info fas fa-search"></i></a></td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                </table>
+            </div></div></div>
+
+{% endblock %}

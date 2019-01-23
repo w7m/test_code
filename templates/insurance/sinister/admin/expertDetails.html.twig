@@ -1,0 +1,55 @@
+{% extends 'insurance/sinister/skeleton_page/baseSinistre.html.twig' %}
+{% block body %}
+
+    <div class="card">
+        <h4 class="card-header bg-info" style="color: white"><i class="fas fa-user-edit" style="color: white"></i> Les
+            informations de l'expert:</h4>
+        <div class="container">
+
+            <div class="row" style="margin-top: 50px">
+                <div class="col-9 offset-1">
+                    <table class="table table-hover">
+                        <tbody>
+                        <tr>
+                            <th>Nom complet</th>
+                            <td>{{ expert.firstName~' '~expert.lastName }}</td>
+                        </tr>
+                        <tr>
+                            <th>phoneNumber</th>
+                            <td>{{ expert.phoneNumber }}</td>
+                        </tr>
+                        <tr>
+                            <th>Email</th>
+                            <td>{{ expert.email }}</td>
+                        </tr>
+                        <tr>
+                            <th>Matricule fiscale</th>
+                            <td>{{ expert.registrationTaxNumber }}</td>
+                        </tr>
+                        <tr>
+                            <th>Adresse</th>
+                            <td>{{ expert.city }} {{ expert.postalCode }} {{ expert.address }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Nom de la societe</th>
+                            <td>{{ expert.companyName }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="row">
+                        <div class="col-12 d-flex flex-md-row-reverse">
+                            <a href="{{ path('expertUpdate',{'id':expert.id}) }}">
+                                <button class="btn btn-outline-dark">
+                                    <i class="fas fa-edit"></i> Modifier
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

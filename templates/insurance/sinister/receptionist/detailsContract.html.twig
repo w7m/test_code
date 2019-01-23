@@ -1,0 +1,73 @@
+{% extends 'insurance/sinister/skeleton_page/baseSinistre.html.twig' %}
+
+{% block body %}
+    <h4 class="card-header bg-info" style="color: white"><i class="fas fa-file-contract"></i> Les informations de contrat</h4>
+
+    <div class="container">
+
+        <div class="row" style="margin-top: 50px">
+            <div class="col-6">
+
+                <table class="table table-hover">
+                    <thead>
+                    <tr class="table-info">
+                        <th scope="col" colspan="2">Voiture</th>
+                    </tr>
+                    <tbody>
+                    <tr>
+                        <th>type</th>
+                        <td>{{ vehicule.type }}</td>
+                    </tr>
+                    <tr>
+                        <th>N° d'immatriculation</th>
+                        <td>{{ vehicule.registrationNumber }}</td>
+                    </tr>
+                    <tr>
+                        <th>Puissance fiscale</th>
+                        <td>{{ vehicule.horsePower }}</td>
+                    </tr>
+                    <tr>
+                        <th>Date de 1ère mise en circulation</th>
+                        <td>{{ vehicule.dateOfRegistration|date('d/m/Y') }}</td>
+                    </tr>
+                    <tr>
+                        <th>Nombre de portes</th>
+                        <td>{{ vehicule.doorsNumber }}</td>
+                    </tr>
+                    <tr>
+                        <th>Couleur</th>
+                        <td>{{ vehicule.color }}</td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-6">
+
+                <table class="table table-hover">
+                    <thead>
+                    <tr class="table-info">
+                        <th scope="col" colspan="2">Assuré</th>
+                    </tr>
+                    <tbody>
+                    <tr>
+                        <th>Nom complet</th>
+                        <td>{{ vehicule.ensured.firstName }} {{ vehicule.ensured.lastName }}</td>
+                    </tr>
+                    <tr>
+                        <th>CIN</th>
+                        <td>{{ vehicule.ensured.cin }}</td>
+                    </tr>
+                    <tr>
+                        <th>Email</th>
+                        <td>{{ vehicule.ensured.email }}</td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    </div>
+
+{% endblock %}

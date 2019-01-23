@@ -1,0 +1,47 @@
+{% extends 'insurance/expert/skeleton/baseExpert.html.twig' %}
+
+{% block body %}
+
+    <div class="card mb-3  m-auto">
+        <div class="card-header">
+            <h3>
+                <i class="fas fa-table"></i>
+                {% if state == "created" %}
+                    Liste des nouveaux dossiers
+                {% elseif state == "in-progress" %}
+                    Liste des dossiers en cours
+                {% elseif state == "selling-standby" %}
+                    Liste des dossier epaves
+                {% elseif state == "closed" %}
+                    Liste des dossiers en archive
+                {% elseif state == "reassigned" %}
+                    Liste des dossiers en contre expertise
+                {% else %}
+                    Liste des dossiers en retour
+                {% endif %}
+            </h3>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-sm" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th class="text-center " width="20%">Référence</th>
+                        <th class="text-center " width="20%">Date affectation</th>
+                        <th class="text-center " width="20%">Immatriculation</th>
+                        <th class="text-center " width="20%">Client</th>
+                        <th class="text-center " width="20%">Action</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('dataTabes') }}
+{% endblock %}
+
+

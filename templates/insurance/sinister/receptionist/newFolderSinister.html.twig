@@ -1,0 +1,102 @@
+{% extends 'insurance/sinister/skeleton_page/baseSinistre.html.twig' %}
+
+{% block body %}
+    <div class="card-header bg-info mb-2 border rounded">
+        <h1 class="text-white text-center">Ajouter Un dossier sinister</h1>
+    </div>
+    <h4 class="bg-light p-2">Vehicule & client </h4>
+    <h6><label class="text-capitalize text-info" for="vehicleRegistrationNumber">matricule de vehicule</label></h6>
+    <div class="d-flex">
+        <input type="text" class="form-control mb-4" placeholder="matricule de vehicule" id="vehicleRegistration">
+        <button class="btn btn-info col-3 mb-4 ml-2" id="vehicleRegistrationNumber">Rechercher <i
+                    class="fas fa-search"></i></button>
+    </div>
+    <table class="table table-bordered table-sm">
+
+        <thead>
+        <tr class="table-light">
+            <th scope="col" colspan="2" class="text-capitalize text-info">Véhicule</th>
+            <th scope="col" colspan="2" class="text-capitalize text-info">Assuré</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th scope="row">type de véhicule</th>
+            <td><span class="mx-2" id="type"></span></td>
+            <th scope="row">Nom</th>
+            <td><span class="mx-2" id="firstName"></span></td>
+        </tr>
+        <tr>
+            <th scope="row">matricule</th>
+            <td><span class="mx-2" id="registrationNumber"></span></td>
+            <th scope="row">prénom</th>
+            <td><span class="mx-2" id="lastName"></span></td>
+        </tr>
+        <tr>
+            <th scope="row">carte grise</th>
+            <td><span class="mx-2" id="grayCard"></span></td>
+            <th scope="row">cin</th>
+            <td><span class="mx-2" id="cin"></span></td>
+        </tr>
+        <tr>
+            <th scope="row">nombre de portes</th>
+            <td><span class="mx-2" id="doorsNumber"></span></td>
+            <th scope="row">email</th>
+            <td><span class="mx-2" id="email"></span></td>
+        </tr>
+        <tr>
+            <th scope="row">puissance fiscale</th>
+            <td><span class="mx-2" id="horsePower"></span></td>
+            <th scope="row">ville</th>
+            <td><span class="mx-2" id="city"></span></td>
+        </tr>
+        {#<tr>#}
+            {#<th scope="row">date premiere mise circulation</th>#}
+            {#<td><span class="mx-2" id="dateOfRegistration"></span></td>#}
+        {#</tr>#}
+        <tr>
+            <th scope="row">color</th>
+            <td><span class="mx-2" id="color"></span></td>
+        </tr>
+        </tbody>
+    </table>
+    <input type="hidden" id="id_v">
+
+    <h4 class="bg-light p-2">Expert</h4>
+
+    <h6><label class="text-capitalize text-info" for="expert">affecter un expert </label></h6>
+    <table id="listExpertChoiceReceptionist" class="table table-bordered table-sm">
+        <thead>
+        <tr class="table-light">
+            <th>Option</th>
+            <th>Prénom</th>
+            <th>Nom</th>
+            <th>Téléphone</th>
+            <th>Email</th>
+            <th>Matricule Fiscale</th>
+            <th>Raison</th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <h4 class="bg-light p-2">Constat</h4>
+    <h6><label class="text-capitalize text-info" for="expert">Sélectionner un constat </label></h6>
+
+    {{ form_start(imageForm) }}
+    {{ form_widget(imageForm) }}
+    <button class="btn btn-success btn-block"
+            id="addFolder">{{ button_label|default('Valider & importer l\'ordre de mission') }}</button>
+    {{ form_end(imageForm) }}
+
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('listExpert') }}
+    {{ encore_entry_script_tags('dataTabes') }}
+    {{ encore_entry_script_tags('addnewfolder') }}
+
+
+{% endblock %}

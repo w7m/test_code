@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+    {% block navbar %}
+        {{ include('insurance/expert/skeleton/navbar.html.twig') }}
+    {% endblock %}
+
+    {% block menu %}
+        {{ include('insurance/expert/skeleton/menu.html.twig') }}
+    {% endblock %}
+
+    {% block javascripts %}
+        {{ parent() }}
+        {{ encore_entry_script_tags('dataTabes') }}
+        {{ encore_entry_script_tags('expertNewFolder') }}
+        {{ encore_entry_script_tags('countFolderExpert') }}
+        {{ encore_entry_script_tags('historyFolderExpert') }}
+    {% endblock %}
+
+    {% block stylesheets %}
+        {{ parent() }}
+        {{ encore_entry_link_tags('expert') }}
+    {% endblock %}
+

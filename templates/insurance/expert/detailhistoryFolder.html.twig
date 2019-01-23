@@ -1,0 +1,97 @@
+{% extends 'insurance/expert/skeleton/baseExpert.html.twig' %}
+{% block body %}
+
+    <div class="w-75 mx-auto ">
+        <h3 class="mb-3">Détail historique </h3>
+        <div class="card mb-5">
+            <div class="card-header">
+                <span class="font-weight-bold"> Dossier  : </span>{{ archive.folder.ref }}
+            </div>
+            <div class="card-body">
+                <table class="w-100">
+                    <tbody>
+                    <tr class="border-0">
+                        <th scope="row" class="border-0 text-success">Statut</th>
+                        <td class="border-0">{{ archive.folder.state }}</td>
+                    </tr>
+                    <tr class="border-0">
+                        <th scope="row" class="border-0 text-success">Remboursement</th>
+                        <td class="border-0">{{ archive.folder.refund }}</td>
+                    </tr>
+                    <tr class="border-0">
+                        <th scope="row" class="border-0 text-success">Numéro de chèque</th>
+                        <td class="border-0">
+
+                            {% if archive.folder.checkNumber is defined and archive.folder.checkNumber is not null %}
+                                {{ archive.folder.paymentDate }}
+                            {% else %}
+                                0
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr class="border-0">
+                        <th scope="row" class="border-0 text-success">prix de Paiement</th>
+
+                        <td class="border-0">
+                            {% if archive.folder.paymentDate is defined and archive.folder.paymentDate is not null %}
+
+                            {{ archive.folder.paymentDate }}
+                            {% else %}
+                            0
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr class="border-0">
+                        <th scope="row" class="border-0 text-success">Véhicule</th>
+                        <td class="border-0">{{ archive.folder.vehicle.type }}</td>
+                    </tr>
+                    <tr class="border-0">
+                        <th scope="row" class="border-0 text-success">Matricule</th>
+                        <td class="border-0">{{ archive.folder.vehicle.registrationNumber }}</td>
+                    </tr>
+                    <tr class="border-0">
+                        <th scope="row" class="border-0 text-success">Nombre de chevaux</th>
+                        <td class="border-0">{{ archive.folder.vehicle.registrationNumber }}</td>
+                    </tr>
+                    <tr class="border-0">
+                        <th scope="row" class="border-0 text-success">Carte grise</th>
+                        <td class="border-0">{{ archive.folder.vehicle.horsePower }}</td>
+                    </tr>
+                    <tr class="border-0">
+                        <th scope="row" class="border-0 text-success">Assuré</th>
+                        <td class="border-0">{{ archive.folder.vehicle.ensured.firstName|capitalize }} {{ archive.folder.vehicle.ensured.lastName|capitalize }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card mb-5">
+            <div class="card-header">
+                <span class="font-weight-bold">  Type d'action : </span> {{ archive.action }}
+            </div>
+            <div class="card-body">
+                <table class="w-100">
+                    <tbody>
+                    <tr class="border-0">
+                        <th scope="row" class="border-0 text-success">Actionneur</th>
+                        <td class="border-0">{{ archive.user.firstName|capitalize }} {{ archive.user.lastName|capitalize }}</td>
+                    </tr>
+                    <tr class="border-0">
+                        <th scope="row" class="border-0 text-success">Le</th>
+                        <td class="border-0">{{ archive.actionDate|date('y/m/d') }}</td>
+                    </tr>
+                    <tr class="border-0">
+                        <th scope="row" class="border-0 text-success">Commentaire</th>
+                        <td class="border-0">{{ archive.comments }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+

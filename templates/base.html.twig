@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link href="{{ asset('build/images/car.png') }}" rel="icon" type="image/x-icon"/>
+    <link href="{{ asset('build/images/car.png') }}" rel="shortcut icon" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}ASSURANCE{% endblock %}</title>
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+</head>
+<body id="page-top">
+{% block navbar %}
+{% endblock %}
+<div id="wrapper">
+    {% block menu %}
+    {% endblock %}
+    <div id="content-wrapper">
+        <div class="container-fluid">
+            {% block flash %}
+                {% for flashMessage in app.session.flashbag.get('error') %}
+                    <div class="alert alert-danger">
+                        {{ flashMessage }}
+                    </div>
+                {% endfor %}
+                {% for flashMessage in app.session.flashbag.get('success') %}
+                    <div class="alert alert-success">
+                        {{ flashMessage }}
+                    </div>
+                {% endfor %}
+            {% endblock %}
+            {% block body %}
+            {% endblock %}
+        </div>
+        {% block footer %}
+        {{ include('footer.html.twig') }}
+        {% endblock %}
+    </div>
+</div>
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+    {{ encore_entry_script_tags('flashbag') }}
+    {{ encore_entry_script_tags('admin') }}
+{% endblock %}
+</body>
+</html>

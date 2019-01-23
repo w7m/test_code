@@ -1,0 +1,27 @@
+<div class="card">
+    <h4 class="card-header"><i class="fas fa-images"></i> {{ listTitle }}</h4>
+    <div class="d-flex card-body">
+        {% for image in folder.attachedFile %}
+            {% if image.type == type %}
+                <div style="position: relative; display: inline-block;">
+                    <img height="200" src="data:image/png;base64,{{ image.fileBase64 }}"
+                         alt="">
+                    <div style="position: absolute; top: 0;right: 0;" class="imageValidation">
+                        <input type="hidden" value="{{ image.id }}" class="idImage">
+                        <input type="hidden" value="{{ image.validated }}" class="statusImage">
+                        {% if is_granted('ROLE_VALIDATOR') %}
+                            <div class="imageValidator">
+                                {% if image.validated == true %}
+                                    <i class="fas fa-check fa-2x text-success"></i>
+                                {% else %}
+                                    <i class="fas fa-times fa-2x text-danger"></i>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+

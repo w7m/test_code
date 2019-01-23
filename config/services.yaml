@@ -1,0 +1,115 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: 'fr'
+    app.path.accident_images: /uploads/images/accidents
+    email_from: '%env(MAILER_FROM)%'
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/*'
+        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    App\Controller\:
+        resource: '../src/Controller'
+        tags: ['controller.service_arguments']
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+    App\Service\Mailer:
+        arguments:
+            $mailFrom: '%email_from%'
+    App\Service\PDFGenerator:
+        arguments:
+        - '@twig'
+    App\Service\NewFolder:
+        arguments:
+        - '@doctrine.orm.default_entity_manager'
+
+    App\Entity\Archive:
+        autowire: true
+
+    datatable.experts:
+        class: App\Service\ExpertDataTable
+        autowire: true
+        public: false
+        tags: [{ name: datatable, id: experts }]
+        arguments:
+        - '@doctrine'
+        - '@router'
+
+    datatable.experts_choice:
+        class: App\Service\ExpertChoiceDataTable
+        autowire: true
+        public: false
+        tags: [{ name: datatable, id: experts_choice }]
+        arguments:
+        - '@doctrine'
+        - '@router'
+    datatable.agent:
+        class: App\Service\ReceptionnistDataTable
+        autowire: true
+        public: false
+        tags: [{ name: datatable, id: agent }]
+        arguments:
+        - '@doctrine'
+        - '@router'
+
+    datatable.validator:
+        class: App\Service\ValidateurDataTable
+        autowire: true
+        public: false
+        tags: [{ name: datatable, id: validator }]
+        arguments:
+        - '@doctrine'
+        - '@router'
+
+    datatable.financier:
+        class: App\Service\FinancierDataTable
+        autowire: true
+        public: false
+        tags: [{ name: datatable, id: financier }]
+        arguments:
+        - '@doctrine'
+        - '@router'
+
+    datatable.folder:
+        class: App\Service\ReceptionistFolderDataTable
+        autowire: true
+        public: false
+        tags: [{ name: datatable, id: folder }]
+        arguments:
+            - '@doctrine'
+            - '@router'
+
+    datatable.validatorFolder:
+        class: App\Service\ValidatorFolderDataTable
+        autowire: true
+        public: false
+        tags: [{ name: datatable, id: validatorFolder }]
+        arguments:
+        - '@doctrine'
+        - '@router'
+
+    datatable.contract:
+        class: App\Service\ReceptionistContractDataTable
+        autowire: true
+        public: false
+        tags: [{ name: datatable, id: contract }]
+        arguments:
+            - '@doctrine'
+            - '@router'
+
+

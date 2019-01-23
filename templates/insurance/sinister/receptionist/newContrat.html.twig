@@ -1,0 +1,127 @@
+{% extends 'insurance/sinister/skeleton_page/baseSinistre.html.twig' %}
+
+{% block body %}
+    <div class="card-header bg-info mb-2 border rounded">
+        <h1 class="text-white text-center">Ajouter Un Contrat</h1>
+    </div>
+    {{ form_start(form) }}
+    <div class="container border rounded border-success pt-3 bg-light mb-2" id="form_top">
+        <div class="row">
+            <div class="col p-1">
+                {{ form_row(form.firstName) }}
+            </div>
+            <div class="col p-1">
+                {{ form_row(form.lastName) }}
+            </div>
+            <div class="col p-1">
+                {{ form_row(form.email) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col p-1">
+                {{ form_row(form.phone) }}
+            </div>
+            <div class="col p-1">
+                {{ form_row(form.city) }}
+            </div>
+            <div class="col p-1">
+                {{ form_row(form.zipCode) }}
+            </div>
+            <div class="col p-1">
+                {{ form_row(form.CIN) }}
+            </div>
+        </div>
+    </div>
+    {{ form_widget(form) }}
+
+    <div class="" data-prototype="{{ form_widget(form.Vehicles.vars.prototype)|e('html_attr') }}">
+        <div id="default_vehicle"></div>
+        {# iterate over each existing vehicle and render#}
+        {% for vehicle in form.Vehicles %}
+            <div class="panel panel-warning">
+                <div class="panel-body">
+                    {{ form_row(vehicle) }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <button class="btn btn-success btn-block">{{ button_label|default('Enregistrer') }}</button>
+    {{ form_end(form) }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script
+            src="https://code.jquery.com/jquery-3.3.1.js"
+            integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+            crossorigin="anonymous"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
+    {{ encore_entry_script_tags('newContract') }}
+    <script>
+        $(document).ready(function () {
+            $("form").validate({
+                onkeyup: function (element) {
+                    $(element).valid();
+                },
+
+                rules: {
+                    "ensured[firstName]": {required: true, minlength: 3, maxlength: 20},
+                    "ensured[email]": {email:true},
+                    "ensured[lastName]": {required: true, minlength: 3, maxlength: 20},
+                    "ensured[phone]": {required: true, digits: true, minlength: 8, maxlength: 8},
+                    "ensured[zipCode]": {digits: true, minlength: 4, maxlength: 5},
+                    "ensured[CIN]": {minlength: 8, maxlength: 8, digits: true},
+                    "ensured[city]": {required: true},
+
+                },
+                wrapper: 'span',
+                errorPlacement: function (error, element) {
+                    error.css({'borderColor': 'red', 'color': 'red'});
+                    error.insertAfter(element);
+                },
+                messages: {
+                    "ensured[firstName]": {
+                        minlength: 'Veuillez entrer au moins 3 caractères.',
+                        maxlength: 'Veuillez ne pas entrer plus de 20 caractères.',
+
+                    },
+                    "ensured[email]": {email:'S\'il vous plaît, mettez une adresse email valide.'},
+                    "ensured[lastName]": {
+                        minlength: 'Veuillez entrer au moins 3 caractères.',
+                        maxlength: 'Veuillez ne pas entrer plus de 20 caractères.',
+
+                    },
+                    "ensured[phone]": {
+
+                        digits: 'S\'il vous plait, entrez un nombre valide.',
+                        minlength: 'Veuillez entrer 8 caractères.',
+                        maxlength: 'Veuillez entrer 8 caractères.'
+                    },
+                    "ensured[zipCode]": {
+
+                        digits: 'S\'il vous plait, entrez un nombre valide.',
+                        minlength: 'Veuillez entrer au moins 4 caractères.',
+                        maxlength: 'Veuillez ne pas entrer plus de 5 caractères.'
+                    },
+                    "ensured[CIN]": {
+
+                        minlength: 'Veuillez entrer 8 caractères.',
+                        maxlength: 'Veuillez entrer 8 caractères.',
+                        digits: 'S\'il vous plait, entrez un nombre valide.'
+                    },
+                    "ensured[city]": {
+                        text: 'S\'il vous plait, entrez un text valide.'
+                    }
+                }
+
+            })
+
+        })
+
+    </script>
+    <script>
+        jQuery.extend(jQuery.validator.messages, {
+            required: "Ce champ est requis."
+        });
+
+    </script>
+{% endblock %}
